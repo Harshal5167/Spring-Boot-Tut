@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 @Component
@@ -30,7 +29,7 @@ public class ProductService {
     }
 
     public Product getProductById(int productId) {
-        return productRepo.findById(productId).orElse(new Product(0, "No Item", 0));
+        return productRepo.findById(productId).orElse(new Product("No Item", "-", "-", new BigDecimal("0.00"), "-", new Date(2024, Calendar.JANUARY, 1), false, 0));
     }
 
     public void addProduct(Product product) {
