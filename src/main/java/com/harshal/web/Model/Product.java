@@ -1,9 +1,7 @@
 package com.harshal.web.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import lombok.Data; //lombok dependency simplifies the work of creating extra useful methods for Product class by creating them itself.
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,23 +19,32 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // This annotation tells JPA that this field is auto-generated.
     private int id;
     private String name;
-    private String desc;
+    private String description;
     private String brand;
     private BigDecimal price;
     private String category;
-    private Date releaseDate;
-    private boolean available;
-    private int quantity;
 
-    public Product(String name, String desc, String brand, BigDecimal price, String category, Date releaseDate, boolean available, int quantity) {
+//    @JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") // This annotation tells Jackson to format the date in the specified pattern.
+    private Date releaseDate;
+    private boolean productAvailable;
+    private int stockQuantity;
+
+    private String imageName;
+    private String imageType;
+
+    @Lob // This annotation tells JPA that this field is a large object.
+    private byte[] imageData; // This field will store the image data directly in the database in binary format.
+
+
+    public Product(String name, String description, String brand, BigDecimal price, String category, Date releaseDate, boolean productAvailable, int stockQuantity) {
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         this.brand = brand;
         this.price = price;
         this.category = category;
         this.releaseDate = releaseDate;
-        this.available = available;
-        this.quantity = quantity;
+        this.productAvailable = productAvailable;
+        this.stockQuantity = stockQuantity;
     }
 
 }

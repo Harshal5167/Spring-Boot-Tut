@@ -5,8 +5,9 @@ import com.harshal.web.Repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigDecimal;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -29,10 +30,14 @@ public class ProductService {
     }
 
     public Product getProductById(int productId) {
-        return productRepo.findById(productId).orElse(new Product("No Item", "-", "-", new BigDecimal("0.00"), "-", new Date(2024, Calendar.JANUARY, 1), false, 0));
+        return productRepo.findById(productId).orElse(null);
     }
 
-    public void addProduct(Product product) {
+    public void addProduct(Product product, MultipartFile ImageFile) throws IOException {
+        System.out.println(product.getReleaseDate());
+        product.setImageName(ImageFile.getOriginalFilename());
+        product.setImageType(ImageFile.getContentType());
+        product.setImageData(ImageFile.getBytes());
         productRepo.save(product);
     }
 
@@ -40,7 +45,16 @@ public class ProductService {
         productRepo.deleteById(productId);
     }
 
-    public void updateProduct(Product product) {
+    public void updateProduct(int productId, Product product, MultipartFile imageFile) throws IOException {
+        product.setImageData(imageFile.getBytes());
+        product.setImageType(imageFile.getContentType());
+        product.setImageName(imageFile.getOriginalFilename());
         productRepo.save(product);
+    }
+
+    public byte[] getProductImage(int productId) {
+        Product product = productRepo.findById(productId).orElse(null);
+        if (product != null) return product.getImageData();
+        return null;
     }
 }

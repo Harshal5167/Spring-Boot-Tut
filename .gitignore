@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### data files ###
-/src/main/resources/data.sql
+/src/main/resources/data1.sql
