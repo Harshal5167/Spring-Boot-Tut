@@ -57,4 +57,8 @@ public class ProductService {
         if (product != null) return product.getImageData();
         return null;
     }
+
+    public List<Product> searchProducts(String keyword) {
+        return productRepo.searchProducts(keyword);
+    }
 }

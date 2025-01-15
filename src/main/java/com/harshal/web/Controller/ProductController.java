@@ -70,5 +70,9 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatusCode.valueOf(500));
         }
     }
-}
 
+    @GetMapping("products/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword){ //RequestParam is used to get the value of the query parameter in the url
+        return new ResponseEntity<>(productService.searchProducts(keyword), HttpStatusCode.valueOf(200));
+    }
+}
