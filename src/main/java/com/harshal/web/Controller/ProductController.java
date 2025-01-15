@@ -2,7 +2,6 @@ package com.harshal.web.Controller;
 
 import com.harshal.web.Model.Product;
 import com.harshal.web.Service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProductController {
 
-    @Autowired
-    ProductService productService;
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<List<Product>> getProducts() {
@@ -51,7 +53,7 @@ public class ProductController {
 
     @DeleteMapping("/deleteProduct/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable int productId) {
-        try{
+        try {
             productService.deleteProduct(productId);
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
         } catch (Exception e) {
@@ -62,7 +64,7 @@ public class ProductController {
 
     @PutMapping("/updateProduct/{productId}")
     public ResponseEntity<?> updateProduct(@PathVariable int productId, @RequestPart Product product, @RequestPart MultipartFile imageFile) {
-        try{
+        try {
             productService.updateProduct(productId, product, imageFile);
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
         } catch (Exception e) {
@@ -72,7 +74,7 @@ public class ProductController {
     }
 
     @GetMapping("products/search")
-    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword){ //RequestParam is used to get the value of the query parameter in the url
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword) { //RequestParam is used to get the value of the query parameter in the url
         return new ResponseEntity<>(productService.searchProducts(keyword), HttpStatusCode.valueOf(200));
     }
 }

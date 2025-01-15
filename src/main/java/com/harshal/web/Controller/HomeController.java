@@ -1,5 +1,8 @@
 package com.harshal.web.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,4 +16,9 @@ public class HomeController {
     public String home() {
         return "This is an E-commerce Api";
     }
+
+    @GetMapping("/csrf-token") //this is a custom endpoint that is used to get the csrf token from the server.
+    public CsrfToken getCsrfToken(HttpServletRequest request) { //httpServletRequest is used to get the request object from the client.
+        return (CsrfToken) request.getAttribute("_csrf");
+    }//the csrf token is hidden in the dom and needs to be explicitly passed in a post/put/delete request to the server to prevent csrf attacks.
 }

@@ -34,3 +34,6 @@ build/
 
 ### data files ###
 /src/main/resources/data1.sql
+
+### environment variables files ###
+src/main/resources/.env

@@ -34,7 +34,6 @@ public class ProductService {
     }
 
     public void addProduct(Product product, MultipartFile ImageFile) throws IOException {
-        System.out.println(product.getReleaseDate());
         product.setImageName(ImageFile.getOriginalFilename());
         product.setImageType(ImageFile.getContentType());
         product.setImageData(ImageFile.getBytes());

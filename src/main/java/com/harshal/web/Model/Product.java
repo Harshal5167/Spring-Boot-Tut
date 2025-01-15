@@ -46,5 +46,4 @@ public class Product {
         this.productAvailable = productAvailable;
         this.stockQuantity = stockQuantity;
     }
-
 }
