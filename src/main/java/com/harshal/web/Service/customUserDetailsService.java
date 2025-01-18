@@ -1,7 +1,7 @@
 package com.harshal.web.Service;
 
-import com.harshal.web.Model.User;
 import com.harshal.web.Model.UserPrincipal;
+import com.harshal.web.Model.Users;
 import com.harshal.web.Repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ public class customUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user= userRepo.findByUsername(username); //this line is used to get the user from the database using the username.
+        Users user= userRepo.findByUsername(username); //this line is used to get the user from the database using the username.
         if(user==null){
             System.out.println("User not found");
             throw new UsernameNotFoundException("User not found");
